@@ -1,0 +1,77 @@
+:root {
+    --bg-color: #1a1a2e; --panel-color: #16213e; --text-color: #e94560;
+    --accent-color: #0f3460; --success-color: #4ecca3; --gold-color: #f8b400;
+    --hero-hp-color: #2196f3;
+}
+body { background-color: var(--bg-color); color: white; font-family: 'Segoe UI', Tahoma, monospace, sans-serif; margin: 0; padding: 20px; text-align: center; }
+
+#reset-btn { position: absolute; top: 15px; right: 15px; background: #d92027; color: white; border: 1px solid white; padding: 6px 12px; border-radius: 5px; font-size: 12px; cursor: pointer; opacity: 0.6; transition: 0.2s; z-index: 100; }
+#reset-btn:hover { opacity: 1; transform: scale(1.05); }
+
+.main-nav { margin-bottom: 20px; }
+.main-nav button { background: var(--accent-color); color: white; border: 2px solid var(--text-color); padding: 10px 30px; font-size: 18px; cursor: pointer; border-radius: 5px; margin: 0 5px; }
+.main-nav button.active { background: var(--text-color); }
+.screen { display: none; }
+.screen.active { display: block; }
+
+.battle-container { background: var(--panel-color); border: 2px solid var(--accent-color); border-radius: 10px; max-width: 900px; margin: 0 auto; padding: 20px; }
+.hero-stats { display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+.bar-bg { width: 100%; height: 15px; background: #333; border-radius: 10px; margin-top: 5px; overflow: hidden; border: 1px solid white; }
+.hero-hp-fill { height: 100%; background: var(--hero-hp-color); width: 100%; transition: width 0.2s; }
+.enemy-hp-fill { height: 100%; background: var(--text-color); width: 100%; transition: width 0.2s; }
+
+button.action-btn { background: var(--success-color); color: #1a1a2e; border: none; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; transition: 0.2s; }
+button.action-btn:disabled { background: #555; cursor: not-allowed; }
+button.boss-btn { background: #d92027; color: white; border: none; padding: 12px 25px; font-size: 18px; font-weight: bold; border-radius: 5px; cursor: pointer; margin-top: 10px; width: 100%; }
+
+.arena { padding: 30px 20px; border: 1px dashed var(--text-color); border-radius: 5px; margin-bottom: 20px; position: relative; }
+
+/* 🟢 เวที 5 คน */
+#battle-scene { display: block; height: 250px; background: #2b1b17; border-radius: 10px; margin: 10px 0 20px 0; position: relative; border-bottom: 15px solid #4a5d23; overflow: visible; }
+.sprite { transition: transform 0.15s ease-in-out; user-select: none; }
+.hero-sprite { position: absolute; font-size: 50px; }
+.hero-pos-0 { left: 35%; bottom: 10%; z-index: 5; } 
+.hero-pos-1 { left: 25%; bottom: 40%; z-index: 4; } 
+.hero-pos-2 { left: 25%; bottom: -10%; z-index: 6; } 
+.hero-pos-3 { left: 10%; bottom: 60%; z-index: 3; } 
+.hero-pos-4 { left: 10%; bottom: -30%; z-index: 7; } 
+#enemy-sprite { position: absolute; right: 15%; bottom: 10%; z-index: 5; font-size: 60px; }
+
+/* อนิเมชั่นโจมตี */
+.hero-attacking { transform: translateX(80px) rotate(15deg); }
+.hero-ranged-attack { transform: translateX(20px); }
+.enemy-attacking { transform: translateX(-80px) rotate(-15deg); }
+.slime { filter: drop-shadow(0 0 5px #4ecca3); }
+.boss-slime { font-size: 90px !important; filter: drop-shadow(0 0 15px #d92027); transform-origin: bottom; }
+.hurt { filter: brightness(0.5) sepia(1) hue-rotate(-50deg) saturate(5); transform: translateY(-10px); }
+.hero-dead { transform: rotate(-90deg) translateY(20px) !important; filter: grayscale(100%); transition: transform 0.5s ease, filter 0.5s ease; }
+
+/* ดาเมจ & คริติคอล */
+.damage-text { position: absolute; font-weight: bold; font-size: 24px; animation: floatUp 0.8s forwards; text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; z-index: 20; pointer-events: none; }
+.crit-text { color: #f1c40f !important; font-size: 35px !important; text-shadow: 0 0 10px #f39c12, 2px 2px 0 #000 !important; }
+@keyframes floatUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-40px) scale(1.5); } }
+
+/* กระสุนเวทย์/ธนู */
+.projectile { position: absolute; font-size: 30px; z-index: 10; animation: shoot-right 0.3s linear forwards; pointer-events: none; }
+@keyframes shoot-right { 0% { transform: translateX(0) scale(0.5); opacity: 1; } 100% { transform: translateX(300px) scale(1.5); opacity: 0; } }
+
+/* หน้าตาย Overlay */
+.death-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(26, 26, 46, 0.9); z-index: 30; flex-direction: column; justify-content: center; align-items: center; border-radius: 5px; }
+.death-overlay.active { display: flex; }
+
+/* แท็บกระเป๋าและฮีโร่ */
+.tabs { display: flex; background: var(--accent-color); max-width: 900px; margin: 0 auto;}
+.tab-btn { flex: 1; padding: 15px; border: none; background: none; color: white; cursor: pointer; font-weight: bold; }
+.tab-btn.active { background: var(--text-color); }
+.inventory-content { padding: 20px; min-height: 300px; background: var(--panel-color); text-align: left; max-width: 900px; margin: 0 auto; border-radius: 0 0 10px 10px;}
+.item-slot { background: rgba(255, 255, 255, 0.1); padding: 10px; margin-bottom: 8px; border-radius: 5px; display: flex; justify-content: space-between; }
+.item-name { font-weight: bold; color: var(--success-color); }
+
+/* Gacha & Filter */
+.gacha-window { width: 100%; height: 120px; background: #0f172a; border: 2px solid var(--gold-color); border-radius: 8px; position: relative; overflow: hidden; margin-bottom: 15px; box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
+.gacha-strip { display: flex; height: 100%; width: max-content; align-items: center; }
+.gacha-box { box-sizing: border-box; width: 100px; height: 100px; margin: 0 5px; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 8px; background: rgba(255,255,255,0.05); border: 2px solid #333; font-weight: bold; flex-shrink: 0; }
+.gacha-pointer { position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: red; transform: translateX(-50%); z-index: 10; box-shadow: 0 0 10px red; }
+.gacha-results-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 15px; max-height: 300px; overflow-y: auto; }
+.filter-bar { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 5px; }
+.filter-bar select { background: var(--panel-color); color: white; border: 1px solid var(--accent-color); padding: 5px; border-radius: 4px; outline: none; }

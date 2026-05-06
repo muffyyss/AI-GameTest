@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy Idle - Ultimate Edition</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <button id="reset-btn" onclick="resetGame()">🔄 Reset Game</button>
+    <div class="main-nav">
+        <button id="nav-battle" class="active" onclick="switchMainScreen('battle')">BATTLE</button>
+        <button id="nav-hero" onclick="switchMainScreen('hero')">HERO</button>
+        <button id="nav-gacha" onclick="switchMainScreen('gacha')">GACHA</button>
+        <button id="nav-bag" onclick="switchMainScreen('inventory')">BAG</button>
+    </div>
+
+    <!-- SCREEN: BATTLE -->
+    <div id="screen-battle" class="screen active">
+        <div class="battle-container">
+            <div class="hero-stats">
+                <div style="text-align: left; width: 100%;">
+                    <div style="color: var(--gold-color); font-size: 20px; font-weight: bold;">🪙 เหรียญ: <span id="coin-display">0</span></div>
+                    <div style="font-size: 14px; margin-top: 5px;">Team HP: <span id="hero-hp">10</span> / <span id="hero-max-hp">10</span></div>
+                    <div class="bar-bg"><div id="hero-hp-fill" class="hero-hp-fill"></div></div>
+                </div>
+            </div>
+
+            <div class="arena">
+                <h2 id="stage-display">ด่านที่ 1 - มอนสเตอร์ปกติ</h2>
+                
+                <div id="battle-scene">
+                    <div id="enemy-sprite" class="sprite slime">🟢</div>
+                </div>
+
+                <div style="margin-bottom: 5px;">ดาเมจศัตรู: <span id="enemy-dmg">1</span></div>
+                <div style="margin-bottom: 5px;">HP: <span id="enemy-hp">2</span> / <span id="enemy-max-hp">2</span></div>
+                <div class="bar-bg" style="width: 80%; margin: 10px auto;"><div id="enemy-hp-fill" class="enemy-hp-fill"></div></div>
+                <p id="battle-log" style="color: #aaa; font-size: 14px; min-height: 20px;">เตรียมพร้อมต่อสู้...</p>
+
+                <div id="death-screen" class="death-overlay">
+                    <h2 style="color: #ff4757; margin-bottom: 10px;">💀 ทีมหมดสติ!</h2>
+                    <p style="color: #ccc; margin-bottom: 20px;">สู้ไม่ไหวแล้ว ต้องกลับไปตั้งหลักใหม่</p>
+                    <button class="action-btn" onclick="reviveHero()">ฟื้นคืนชีพ & ลุยต่อ</button>
+                </div>
+            </div>
+            <button id="boss-btn" class="boss-btn" onclick="challengeBoss()">🔥 ท้าสู้บอส (ด่าน 1)</button>
+        </div>
+    </div>
+
+    <!-- SCREEN: HERO -->
+    <div id="screen-hero" class="screen">
+        <div class="tabs">
+            <button class="tab-btn" onclick="switchHeroTab('hero', event)">HERO</button>
+            <button class="tab-btn active" onclick="switchHeroTab('team', event)">TEAM</button>
+            <button class="tab-btn" onclick="switchHeroTab('pet', event)">PET</button>
+        </div>
+        <div id="hero-content" class="inventory-content"></div>
+    </div>
+
+    <!-- SCREEN: GACHA -->
+    <div id="screen-gacha" class="screen">
+        <div class="battle-container" style="text-align: center;">
+            <h2 style="color:var(--gold-color);">🎲 ตู้สุ่มฮีโร่แห่งโชคชะตา</h2>
+            <p>เรทออก: <span style="color:#e74c3c">Immortal 1%</span> | <span style="color:#f1c40f">Legendary 5%</span> | <span style="color:#9b59b6">Epic 10%</span> | <span style="color:#3498db">Rare 25%</span> | <span style="color:#2ecc71">Normal 59%</span></p>
+            
+            <div class="gacha-window" id="gacha-window">
+                <div class="gacha-strip" id="gacha-strip"></div>
+                <div class="gacha-pointer"></div>
+            </div>
+
+            <div id="gacha-results" class="gacha-results-grid"></div>
+
+            <div style="display:flex; justify-content:center; gap:10px; margin-top:20px;">
+                <button class="action-btn" onclick="rollGacha(1)">สุ่ม 1 ครั้ง<br><small>(100 🪙)</small></button>
+                <button class="action-btn" style="background:#3498db;" onclick="rollGacha(10)">สุ่ม 10 ครั้ง<br><small>(900 🪙)</small></button>
+                <button class="action-btn" style="background:#9b59b6;" onclick="rollGacha(100)">สุ่ม 100 ครั้ง<br><small>(9,000 🪙)</small></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN: INVENTORY -->
+    <div id="screen-inventory" class="screen">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchInvTab('equip', event)">EQUIP</button>
+            <button class="tab-btn" onclick="switchInvTab('material', event)">MATERIAL</button>
+            <button class="tab-btn" onclick="switchInvTab('item', event)">ITEM</button>
+        </div>
+        <div id="inventory-list" class="inventory-content"></div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
